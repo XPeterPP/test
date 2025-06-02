@@ -533,7 +533,7 @@
 
       th:nth-child(3),
       td:nth-child(3) {
-        width: 8%;
+        width: 7%;
       }
 
       th:nth-child(4),
@@ -543,12 +543,12 @@
 
       th:nth-child(5),
       td:nth-child(5) {
-        width: 8%;
+        width: 15%;
       }
 
       th:nth-child(6),
       td:nth-child(6) {
-        width: 8%;
+        width: 5%;
       }
     }
 
@@ -777,7 +777,7 @@
       addTableCell(newRow, rowData[1] || '-');
       addTableCell(newRow, rowData[2] || '-');
       addTableCell(newRow, rowData[3] || '-');
-      addTableCell(newRow, rowData[4] ? `NT$ ${rowData[4]}` : '-', true);
+      addTableCell(newRow, rowData[4] ? `NT$${rowData[4]}` : '-', true);
       addTableCell(newRow, rowData[5] || '-');
     }
     
