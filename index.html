@@ -439,7 +439,7 @@
       allData = [];
       
       // 處理每一行數據 (跳過表頭)
-      for (let i = 1; i < tableData.rows.length; i++) {
+      for (let i = 2; i < tableData.rows.length; i++) {
         const row = tableData.rows[i];
         // 只取B-G列的數據 (索引1到6)
         const rowData = [
