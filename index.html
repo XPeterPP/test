@@ -650,16 +650,16 @@
       allData = [];
       
       // 處理每一行數據 (跳過表頭)
-      for (let i = 1; i < tableData.rows.length; i++) {
+      for (let i = 2; i < tableData.rows.length; i++) {
         const row = tableData.rows[i];
         // 只取B-G列的數據 (索引1到6)
         const rowData = [
-          row.c[1]?.v || '', // 廠牌 (B列)
-          row.c[2]?.v || '', // 型號 (C列)
-          row.c[3]?.v || '', // 顏色 (D列)
-          row.c[4]?.v || '', // 線徑 (E列)
-          row.c[5]?.v || '', // 價格 (F列)
-          row.c[6]?.v || ''  // 庫存 (G列)
+          row.c[2]?.v || '', // 廠牌 (B列)
+          row.c[3]?.v || '', // 型號 (C列)
+          row.c[4]?.v || '', // 顏色 (D列)
+          row.c[5]?.v || '', // 線徑 (E列)
+          row.c[6]?.v || '', // 價格 (F列)
+          row.c[7]?.v || ''  // 庫存 (G列)
         ];
         
         // 只添加有數據的行 (在B-G列至少有一個值)
