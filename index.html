@@ -1,20 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>顯示試算表數據</title>
+    <title>顯示試算表數據 (B-G列)</title>
     <style>
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .loading { color: #666; font-style: italic; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+        }
+        .error {
+            color: #dc3545;
+            padding: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <h1>試算表數據展示</h1>
+    <h1>試算表數據展示 (B-G列)</h1>
     <div id="data-container" class="loading">正在加載數據...</div>
 
     <script>
-        // 您的試算表ID (從URL中獲取)
+        // 您的試算表ID
         const sheetId = '1HTf7tccUHE0b8Nt9z9AqM6si_R2_JjMIs-ZMelnM384';
         // JSON格式的URL
         const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
@@ -23,48 +58,60 @@
             .then(response => response.text())
             .then(text => {
                 try {
-                    // 處理Google的特殊JSON格式
                     const json = JSON.parse(text.substring(47).slice(0, -2));
                     const container = document.getElementById('data-container');
                     container.classList.remove('loading');
                     
                     if (!json.table.rows || json.table.rows.length === 0) {
-                        container.innerHTML = '<p>沒有找到數據</p>';
+                        container.innerHTML = '<p class="error">沒有找到數據</p>';
                         return;
                     }
                     
                     // 創建表格
                     let html = '<table><thead><tr>';
                     
-                    // 添加表頭
-                    json.table.cols.forEach(column => {
-                        html += `<th>${column.label || ''}</th>`;
-                    });
+                    // 只添加 B-G 列的表頭 (假設 B=索引1, G=索引6)
+                    for (let i = 1; i <= 6 && i < json.table.cols.length; i++) {
+                        const column = json.table.cols[i];
+                        html += `<th>${column.label || '列 ' + (i+1)}</th>`;
+                    }
                     
                     html += '</tr></thead><tbody>';
                     
-                    // 添加數據行
+                    // 添加數據行 (只處理 B-G 列)
                     json.table.rows.forEach(row => {
-                        html += '<tr>';
-                        row.c.forEach(cell => {
-                            const value = cell?.v !== undefined ? cell.v : '';
-                            html += `<td>${value}</td>`;
-                        });
-                        html += '</tr>';
+                        // 檢查這一行在 B-G 列是否有任何數據
+                        const hasData = row.c.slice(1, 7).some(cell => cell && cell.v !== undefined && cell.v !== '');
+                        
+                        if (hasData) {
+                            html += '<tr>';
+                            // 只取 B-G 列的數據 (索引1到6)
+                            for (let i = 1; i <= 6 && i < row.c.length; i++) {
+                                const cell = row.c[i];
+                                const value = cell?.v !== undefined ? cell.v : '';
+                                html += `<td>${value}</td>`;
+                            }
+                            html += '</tr>';
+                        }
                     });
                     
                     html += '</tbody></table>';
-                    container.innerHTML = html;
+                    
+                    if (html === '<table><thead><tr></tr></thead><tbody></tbody></table>') {
+                        container.innerHTML = '<p class="error">在 B-G 列中沒有找到數據</p>';
+                    } else {
+                        container.innerHTML = html;
+                    }
                 } catch (error) {
                     console.error('解析數據時出錯:', error);
                     document.getElementById('data-container').innerHTML = 
-                        '<p style="color:red">加載數據時出錯，請檢查控制台獲取詳細信息。</p>';
+                        '<p class="error">加載數據時出錯，請檢查控制台獲取詳細信息。</p>';
                 }
             })
             .catch(error => {
                 console.error('獲取數據時出錯:', error);
                 document.getElementById('data-container').innerHTML = 
-                    '<p style="color:red">無法加載數據，請確保試算表已公開分享。</p>';
+                    '<p class="error">無法加載數據，請確保試算表已公開分享。</p>';
             });
     </script>
 </body>
