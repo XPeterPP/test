@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>顯示試算表數據</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .loading { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>試算表數據展示</h1>
+    <div id="data-container" class="loading">正在加載數據...</div>
+
+    <script>
+        // 您的試算表ID (從URL中獲取)
+        const sheetId = '1HTf7tccUHE0b8Nt9z9AqM6si_R2_JjMIs-ZMelnM384';
+        // JSON格式的URL
+        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+        
+        fetch(url)
+            .then(response => response.text())
+            .then(text => {
+                try {
+                    // 處理Google的特殊JSON格式
+                    const json = JSON.parse(text.substring(47).slice(0, -2));
+                    const container = document.getElementById('data-container');
+                    container.classList.remove('loading');
+                    
+                    if (!json.table.rows || json.table.rows.length === 0) {
+                        container.innerHTML = '<p>沒有找到數據</p>';
+                        return;
+                    }
+                    
+                    // 創建表格
+                    let html = '<table><thead><tr>';
+                    
+                    // 添加表頭
+                    json.table.cols.forEach(column => {
+                        html += `<th>${column.label || ''}</th>`;
+                    });
+                    
+                    html += '</tr></thead><tbody>';
+                    
+                    // 添加數據行
+                    json.table.rows.forEach(row => {
+                        html += '<tr>';
+                        row.c.forEach(cell => {
+                            const value = cell?.v !== undefined ? cell.v : '';
+                            html += `<td>${value}</td>`;
+                        });
+                        html += '</tr>';
+                    });
+                    
+                    html += '</tbody></table>';
+                    container.innerHTML = html;
+                } catch (error) {
+                    console.error('解析數據時出錯:', error);
+                    document.getElementById('data-container').innerHTML = 
+                        '<p style="color:red">加載數據時出錯，請檢查控制台獲取詳細信息。</p>';
+                }
+            })
+            .catch(error => {
+                console.error('獲取數據時出錯:', error);
+                document.getElementById('data-container').innerHTML = 
+                    '<p style="color:red">無法加載數據，請確保試算表已公開分享。</p>';
+            });
+    </script>
+</body>
+</html>
