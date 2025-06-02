@@ -772,7 +772,7 @@
       addTableCell(newRow, rowData[3] || '-');
       
       // 價格 (加上NT$前綴)
-      addTableCell(newRow, rowData[4] ? `NT$ ${rowData[4]}` : '-', true);
+      addTableCell(newRow, rowData[4] || '-');
       
       // 庫存
       addTableCell(newRow, rowData[5] || '-');
