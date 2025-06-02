@@ -462,66 +462,100 @@
       }
     }
 
-    @media (max-width: 576px) {
-      h1 {
-        font-size: 1.8rem; /* 從2rem調整為1.8rem */
-      }
-      
-      .version-info {
-        font-size: 1rem; /* 從1.1rem調整為1rem */
-      }
-      
-      .notice-list li {
-        font-size: 0.9rem; /* 從0.95rem調整為0.9rem */
-        padding-left: 25px;
-      }
-      
-      .image-wrapper {
-        flex-direction: column;
-        gap: 10px;
-      }
-      
-      .brand-filter {
-        justify-content: flex-start;
-      }
-      
-      .brand-btn {
-        padding: 8px 15px;
-        font-size: 0.9rem; /* 從0.95rem調整為0.9rem */
-      }
-      
-      .floating-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1.2rem;
-        bottom: 15px;
-        right: 15px;
-      }
-      
-      .notice-image {
-        max-width: 240px;
-      }
+   @media (max-width: 576px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  .version-info {
+    font-size: 1rem;
+  }
+  
+  .notice-list li {
+    font-size: 0.85rem; /* 從0.9rem調整為0.85rem */
+    padding-left: 22px; /* 減少左邊距 */
+  }
+  
+  .image-wrapper {
+    flex-direction: column;
+    gap: 8px; /* 減少間距 */
+  }
+  
+  .brand-filter {
+    justify-content: flex-start;
+  }
+  
+  .brand-btn {
+    padding: 6px 12px; /* 減少按鈕內邊距 */
+    font-size: 0.85rem; /* 從0.9rem調整為0.85rem */
+  }
+  
+  .floating-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .notice-image {
+    max-width: 220px; /* 稍微減小圖片大小 */
+  }
 
-      /* 移除手機版卡片式佈局 */
-      .mobile-card-container {
-        display: none;
-      }
-      
-      /* 優化表格在手機上的顯示 */
-      .table-container {
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-      
-      table {
-        min-width: 100%;
-      }
-      
-      th, td {
-        padding: 8px 10px;
-        font-size: 0.8rem; /* 從0.85rem調整為0.8rem */
-      }
-    }
+  /* 表格字體調整 */
+  th, td {
+    padding: 6px 8px;
+    font-size: 0.7rem; /* 從0.75rem調整為0.7rem */
+    white-space: nowrap; /* 防止文字換行 */
+    overflow: hidden; /* 隱藏超出部分 */
+    text-overflow: ellipsis; /* 顯示省略號 */
+    max-width: 80px; /* 限制單元格最大寬度 */
+  }
+  
+  /* 調整公告板內邊距 */
+  .notice-board {
+    padding: 12px;
+  }
+  
+  /* 調整圖片標籤大小 */
+  .image-label {
+    font-size: 0.9rem; /* 從1rem調整為0.9rem */
+    padding: 6px 10px;
+    min-width: 100px;
+  }
+  
+  /* 調整公告標題 */
+  .notice-title {
+    font-size: 1.1rem; /* 從1.2rem調整為1.1rem */
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.5rem; /* 從1.6rem調整為1.5rem */
+  }
+  
+  .notice-title {
+    font-size: 1rem; /* 從1.2rem調整為1rem */
+  }
+  
+  .data-source {
+    font-size: 0.7rem; /* 從0.75rem調整為0.7rem */
+  }
+  
+  /* 進一步縮小表格字體 */
+  th, td {
+    font-size: 0.65rem; /* 從0.7rem調整為0.65rem */
+    padding: 5px 6px;
+  }
+  
+  /* 調整品牌按鈕 */
+  .brand-btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+}
 
     @media (max-width: 400px) {
       h1 {
