@@ -61,7 +61,7 @@
       overflow: hidden;
     }
 
-    /* Header with sporty style */
+    /* 運動風格標題 */
     header {
       background: var(--gradient);
       color: var(--white);
@@ -85,11 +85,10 @@
     }
 
     h1 {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
       font-size: 4rem;
       margin-bottom: 10px;
       font-weight: 800;
-      text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
       position: relative;
@@ -98,15 +97,14 @@
     }
 
     .version-info {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
       font-size: 1.5rem;
       letter-spacing: 3px;
-      text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 10px;
     }
 
-    /* Sporty notice board */
+    /* 公告板運動風格 */
     .notice-board {
       background-color: var(--white);
       border: 4px solid var(--primary);
@@ -129,13 +127,12 @@
     }
 
     .notice-title {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
       font-size: 1.8rem;
       font-weight: 800;
       margin-bottom: 20px;
       color: var(--secondary);
       text-align: center;
-      text-transform: uppercase;
       letter-spacing: 1px;
       position: relative;
       padding-bottom: 10px;
@@ -162,12 +159,11 @@
     }
 
     .image-label {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
       font-size: 1.4rem;
       font-weight: bold;
       color: var(--primary);
       text-align: center;
-      text-transform: uppercase;
       padding: 10px 15px;
       background-color: var(--light);
       border-radius: var(--radius);
@@ -224,7 +220,7 @@
       font-size: 1.5em;
     }
 
-    /* Sporty filter buttons */
+    /* 運動風格篩選按鈕 */
     .brand-filter {
       display: flex;
       flex-wrap: wrap;
@@ -234,7 +230,7 @@
     }
 
     .brand-btn {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
       padding: 12px 25px;
       background-color: var(--primary);
       color: white;
@@ -244,7 +240,6 @@
       font-size: 1.2rem;
       transition: var(--transition);
       box-shadow: var(--shadow);
-      text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: bold;
       position: relative;
@@ -265,7 +260,7 @@
       transform: translateY(-3px);
     }
 
-    /* Table with athletic look */
+    /* 運動風格表格 */
     .table-container {
       margin: 0 30px 30px;
       border-radius: var(--radius);
@@ -291,10 +286,9 @@
     th {
       background-color: var(--primary);
       color: var(--white);
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
       font-size: 1.2rem;
       font-weight: bold;
-      text-transform: uppercase;
       letter-spacing: 1px;
       border-right: 2px solid rgba(255,255,255,0.1);
     }
@@ -320,7 +314,7 @@
       color: var(--primary);
     }
 
-    /* Loading and error states */
+    /* 載入和錯誤狀態 */
     .loading, .error {
       padding: 30px;
       text-align: center;
@@ -354,7 +348,7 @@
       border-color: var(--danger);
     }
 
-    /* Footer */
+    /* 頁尾 */
     .data-source {
       text-align: center;
       font-size: 0.9rem;
@@ -362,12 +356,11 @@
       margin: 30px;
       padding-top: 20px;
       border-top: 2px solid var(--light-gray);
-      font-family: 'Barlow Condensed', sans-serif;
-      text-transform: uppercase;
+      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
       letter-spacing: 1px;
     }
 
-    /* Floating action button */
+    /* 返回頂部按鈕 */
     .floating-btn {
       position: fixed;
       bottom: 30px;
@@ -386,7 +379,7 @@
       transition: var(--transition);
       z-index: 100;
       border: 2px solid var(--black);
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
       font-weight: bold;
     }
 
@@ -396,7 +389,7 @@
       box-shadow: 0 8px 20px rgba(227, 25, 55, 0.6);
     }
 
-    /* Animations */
+    /* 動畫 */
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -406,7 +399,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Responsive styles */
+    /* 響應式設計 */
     @media (max-width: 768px) {
       h1 {
         font-size: 3rem;
@@ -467,12 +460,12 @@
 <body>
   <div class="container">
     <header>
-      <h1>羽球穿線</h1>
-      <div class="version-info">Professional Stringing Service</div>
+      <h1>羽球穿線價目表</h1>
+      <div class="version-info">專業穿線服務</div>
     </header>
 
     <div class="notice-board">
-      <div class="notice-title">Service Information</div>
+      <div class="notice-title">【穿線服務公告】</div>
       <ul class="notice-list">
         <li>自備線材酌收工本費 NT$100</li>
         <li>穿線前可以溝通調整手感(硬、軟、預拉)</li>
@@ -492,7 +485,7 @@
 
     <div id="loading" class="loading">
       <div class="spinner"></div>
-      LOADING...
+      載入中...
     </div>
     <div id="error" class="error" style="display:none;"></div>
     
@@ -504,12 +497,12 @@
       <table id="data-table">
         <thead>
           <tr>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Color</th>
-            <th>Gauge</th>
-            <th>Price</th>
-            <th>Stock</th>
+            <th>廠牌</th>
+            <th>型號</th>
+            <th>顏色</th>
+            <th>線徑</th>
+            <th>價格</th>
+            <th>庫存</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -517,7 +510,7 @@
     </div>
 
     <div class="data-source">
-      Automated System | Data Source: Google Sheets | Updated Daily
+      系統自動生成 | 資料來源: Google Sheets | 更新頻率: 每日
     </div>
   </div>
 
@@ -599,15 +592,15 @@
       // 全部按鈕
       const allBtn = document.createElement('button');
       allBtn.className = 'brand-btn active';
-      allBtn.textContent = 'ALL';
-      allBtn.onclick = () => filterByBrand('ALL');
+      allBtn.textContent = '全部';
+      allBtn.onclick = () => filterByBrand('全部');
       filterContainer.appendChild(allBtn);
       
       // 各品牌按鈕
       brands.forEach(brand => {
         const btn = document.createElement('button');
         btn.className = 'brand-btn';
-        btn.textContent = brand.toUpperCase();
+        btn.textContent = brand;
         btn.onclick = () => filterByBrand(brand);
         filterContainer.appendChild(btn);
       });
@@ -617,13 +610,13 @@
       // 更新按鈕狀態
       document.querySelectorAll('.brand-btn').forEach(btn => {
         btn.classList.remove('active');
-        if (btn.textContent === brand.toUpperCase() || (brand === 'ALL' && btn.textContent === 'ALL')) {
+        if (btn.textContent === brand || (brand === '全部' && btn.textContent === '全部')) {
           btn.classList.add('active');
         }
       });
       
       // 過濾數據
-      const filteredData = brand === 'ALL' 
+      const filteredData = brand === '全部' 
         ? allData 
         : allData.filter(row => row[0] === brand);
       
@@ -638,7 +631,7 @@
         const row = tableBody.insertRow();
         const cell = row.insertCell();
         cell.colSpan = 6;
-        cell.textContent = 'No data available';
+        cell.textContent = '無符合條件的資料';
         cell.style.textAlign = 'center';
         cell.style.padding = '30px';
         cell.style.fontWeight = 'bold';
