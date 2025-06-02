@@ -276,6 +276,8 @@
       box-shadow: var(--shadow);
       border: 3px solid var(--primary);
       position: relative;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* 桌面版表格樣式 */
@@ -285,6 +287,7 @@
       margin: 0;
       font-size: 0.95rem;
       background-color: var(--white);
+      min-width: 600px;
     }
 
     th, td {
@@ -324,64 +327,6 @@
     td:first-child {
       font-weight: bold;
       color: var(--primary);
-    }
-
-    /* 手機版卡片式佈局 */
-    .mobile-card-container {
-      display: none;
-      margin: 0 15px 20px;
-    }
-
-    .mobile-card {
-      background-color: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin-bottom: 15px;
-      border: 2px solid var(--primary);
-      overflow: hidden;
-      transition: var(--transition);
-    }
-
-    .mobile-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .mobile-card-header {
-      background-color: var(--primary);
-      color: var(--white);
-      padding: 12px 15px;
-      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
-      font-weight: bold;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .mobile-card-body {
-      padding: 15px;
-    }
-
-    .mobile-card-row {
-      display: flex;
-      margin-bottom: 10px;
-      align-items: center;
-    }
-
-    .mobile-card-label {
-      font-weight: bold;
-      min-width: 80px;
-      color: var(--primary);
-      font-family: 'Barlow Condensed', 'Noto Sans TC', sans-serif;
-    }
-
-    .mobile-card-value {
-      flex: 1;
-    }
-
-    .price-value {
-      color: var(--secondary);
-      font-weight: bold;
     }
 
     /* 載入和錯誤狀態 */
@@ -557,13 +502,24 @@
         max-width: 240px;
       }
 
-      /* 手機版切換為卡片式佈局 */
-      .table-container {
+      /* 移除手機版卡片式佈局 */
+      .mobile-card-container {
         display: none;
       }
       
-      .mobile-card-container {
-        display: block;
+      /* 優化表格在手機上的顯示 */
+      .table-container {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      
+      table {
+        min-width: 100%;
+      }
+      
+      th, td {
+        padding: 8px 10px;
+        font-size: 0.85rem;
       }
     }
 
@@ -583,10 +539,10 @@
       .data-source {
         font-size: 0.8rem;
       }
-
-      .mobile-card-label {
-        min-width: 70px;
-        font-size: 0.9rem;
+      
+      th, td {
+        padding: 6px 8px;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -627,7 +583,7 @@
       <!-- 品牌按鈕將由JavaScript動態生成 -->
     </div>
     
-    <!-- 桌面版表格 -->
+    <!-- 表格容器 -->
     <div class="table-container">
       <table id="data-table">
         <thead>
@@ -644,11 +600,6 @@
       </table>
     </div>
 
-    <!-- 手機版卡片容器 -->
-    <div id="mobile-card-container" class="mobile-card-container">
-      <!-- 卡片將由JavaScript動態生成 -->
-    </div>
-
     <div class="data-source">
       系統自動生成 | 資料來源: Google Sheets | 更新頻率: 每日
     </div>
@@ -659,10 +610,12 @@
   </div>
 
   <script>
-    // 您的試算表ID
-    const sheetId = '1HTf7tccUHE0b8Nt9z9AqM6si_R2_JjMIs-ZMelnM384';
+    // 使用您指定的試算表ID
+    const sheetId = '1VzWHbEKUY1GDHjT0TA_P89bzhFUCK59wRlxyNqAFNq4';
+    // 指定讀取 "牌價(test)" 分頁
+    const sheetName = '牌價(test)';
     // JSON格式的URL
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
     
     let allData = [];
     let brands = [];
@@ -717,8 +670,7 @@
       
       extractBrands();
       renderBrandFilter();
-      renderDesktopTable(allData);
-      renderMobileCards(allData);
+      renderTable(allData);
       hideLoading();
     }
     
@@ -768,12 +720,11 @@
         ? allData 
         : allData.filter(row => row[0] === brand);
       
-      renderDesktopTable(filteredData);
-      renderMobileCards(filteredData);
+      renderTable(filteredData);
     }
     
-    // 渲染桌面版表格
-    function renderDesktopTable(data) {
+    // 渲染表格
+    function renderTable(data) {
       const tableBody = document.querySelector('#data-table tbody');
       tableBody.innerHTML = '';
       
@@ -787,23 +738,8 @@
       });
     }
     
-    // 渲染手機版卡片
-    function renderMobileCards(data) {
-      const cardContainer = document.getElementById('mobile-card-container');
-      cardContainer.innerHTML = '';
-      
-      if (!data || data.length === 0) {
-        showNoDataMessage(cardContainer, true);
-        return;
-      }
-      
-      data.forEach((row, index) => {
-        createMobileCard(cardContainer, row, index);
-      });
-    }
-    
     // 顯示無數據訊息
-    function showNoDataMessage(container, isMobile = false) {
+    function showNoDataMessage(container) {
       const message = document.createElement('div');
       message.textContent = '無符合條件的資料';
       message.style.textAlign = 'center';
@@ -811,16 +747,10 @@
       message.style.fontWeight = 'bold';
       message.style.color = 'var(--secondary)';
       
-      if (isMobile) {
-        message.style.margin = '20px 0';
-      } else {
-        const row = container.insertRow();
-        const cell = row.insertCell();
-        cell.colSpan = 6;
-        cell.appendChild(message);
-      }
-      
-      container.appendChild(message);
+      const row = container.insertRow();
+      const cell = row.insertCell();
+      cell.colSpan = 6;
+      cell.appendChild(message);
     }
     
     // 創建表格行
@@ -848,65 +778,6 @@
       addTableCell(newRow, rowData[5] || '-');
     }
     
-    // 創建手機卡片
-    function createMobileCard(container, rowData, index) {
-      const card = document.createElement('div');
-      card.className = 'mobile-card';
-      card.style.animation = `fadeIn 0.5s ease-out ${index * 0.05}s forwards`;
-      card.style.opacity = '0';
-      
-      // 卡片頭部 (廠牌 + 型號)
-      const cardHeader = document.createElement('div');
-      cardHeader.className = 'mobile-card-header';
-      
-      const brandSpan = document.createElement('span');
-      brandSpan.textContent = rowData[0] || '未知廠牌';
-      
-      const modelSpan = document.createElement('span');
-      modelSpan.textContent = rowData[1] || '未知型號';
-      
-      cardHeader.appendChild(brandSpan);
-      cardHeader.appendChild(modelSpan);
-      
-      // 卡片內容
-      const cardBody = document.createElement('div');
-      cardBody.className = 'mobile-card-body';
-      
-      // 顏色
-      createMobileCardRow(cardBody, '顏色', rowData[2] || '-');
-      
-      // 線徑
-      createMobileCardRow(cardBody, '線徑', rowData[3] || '-');
-      
-      // 價格
-      createMobileCardRow(cardBody, '價格', rowData[4] ? `NT$ ${rowData[4]}` : '-', true);
-      
-      // 庫存
-      createMobileCardRow(cardBody, '庫存', rowData[5] || '-');
-      
-      card.appendChild(cardHeader);
-      card.appendChild(cardBody);
-      container.appendChild(card);
-    }
-    
-    // 創建手機卡片行
-    function createMobileCardRow(container, label, value, isPrice = false) {
-      const row = document.createElement('div');
-      row.className = 'mobile-card-row';
-      
-      const labelSpan = document.createElement('span');
-      labelSpan.className = 'mobile-card-label';
-      labelSpan.textContent = label;
-      
-      const valueSpan = document.createElement('span');
-      valueSpan.className = isPrice ? 'mobile-card-value price-value' : 'mobile-card-value';
-      valueSpan.textContent = value;
-      
-      row.appendChild(labelSpan);
-      row.appendChild(valueSpan);
-      container.appendChild(row);
-    }
-    
     // 添加表格單元格
     function addTableCell(row, content, isPrice = false) {
       const cell = row.insertCell();
@@ -922,7 +793,6 @@
       document.getElementById('loading').style.display = 'flex';
       document.getElementById('error').style.display = 'none';
       document.querySelector('#data-table tbody').innerHTML = '';
-      document.getElementById('mobile-card-container').innerHTML = '';
     }
     
     // 隱藏載入狀態
